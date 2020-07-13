@@ -2,19 +2,31 @@
 import argparse
 import os
 
-QUEST_ROOT = '.quest'
+QUEST_HOME = '.quest/envs'
 
 
 def init(args):
     """
     Initialize .quest directory
+
+    :param args:
     :return:
     """
-    if os.path.exists(QUEST_ROOT):
+    if os.path.exists(QUEST_HOME):
         print('Reinitializing Quest workspace')
     else:
         print('Initializing empty Quest workspace')
-    os.makedirs(QUEST_ROOT, exist_ok=True)
+    os.makedirs(QUEST_HOME, exist_ok=True)
+
+
+def checkout(args):
+    """
+    Ability to change or create env
+
+    :param args:
+    :return:
+    """
+    print('checkout')
 
 
 def main():
@@ -23,6 +35,9 @@ def main():
 
     parser_init = subparsers.add_parser('init')
     parser_init.set_defaults(func=init)
+
+    parser_checkout = subparsers.add_parser('checkout')
+    parser_checkout.set_defaults(func=checkout)
 
     args = parser.parse_args()
     if args.subcommand is None:

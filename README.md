@@ -4,9 +4,9 @@ A CLI for making requests
 
 ## Features
 
-* checkout environments
-* store variables
 
 ## Todo
 
+* checkout environments
+* store variables
 * Add colors
