@@ -3,22 +3,11 @@ import argparse
 import os
 from pathlib import Path
 
+from exceptions import Error, Fatal
+
 QUEST_HOME = '.quest/envs'
 QUEST_ENVS = '.quest/envs'
 QUEST_HEAD = '.quest/HEAD'
-
-
-class Fatal(RuntimeError):
-    pass
-
-    def __init__(self, message):
-        super().__init__('fatal: %s' % message)
-
-
-class Error(RuntimeError):
-
-    def __init__(self, message):
-        super().__init__('error: %s' % message)
 
 
 def init(args):

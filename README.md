@@ -7,6 +7,5 @@ A CLI for making requests
 
 ## Todo
 
-* checkout environments
 * store variables
 * Add colors
