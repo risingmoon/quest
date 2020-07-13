@@ -24,6 +24,15 @@ def init(args):
     os.makedirs(QUEST_HOME, exist_ok=True)
 
 
+def env(args):
+    with open(QUEST_HEAD, 'r') as f:
+        head = f.read()
+    for path in Path(QUEST_ENVS).iterdir():
+        if path.is_dir():
+            template = '*%s*' if str(path.stem) == head else ' %s '
+            print(template  % path.stem)
+
+
 def checkout(args):
     """
     Ability to change or create env
@@ -57,6 +66,9 @@ def main():
     parser_checkout.add_argument('env', type=str, help='environment', action='store')
     parser_checkout.add_argument('-e', help='create new environment', action='store_true')
     parser_checkout.set_defaults(func=checkout)
+
+    parser_env = subparsers.add_parser('env')
+    parser_env.set_defaults(func=env)
 
     args = parser.parse_args()
     if args.subcommand is None:
