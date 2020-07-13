@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import shutil
 from pathlib import Path
 
 from exceptions import Error, Fatal
@@ -25,12 +26,22 @@ def init(args):
 
 
 def env(args):
-    with open(QUEST_HEAD, 'r') as f:
-        head = f.read()
-    for path in Path(QUEST_ENVS).iterdir():
-        if path.is_dir():
-            template = '*%s*' if str(path.stem) == head else ' %s '
-            print(template  % path.stem)
+    """
+    Lists all (and current) environments. Deletes environments as well
+    :param args:
+    :return:
+    """
+    if args.d:
+        path = Path(QUEST_ENVS) / args.d
+        shutil.rmtree(path)
+        print('Deleted environment %s' % args.d)
+    else:
+        with open(QUEST_HEAD, 'r') as f:
+            head = f.read()
+        for path in Path(QUEST_ENVS).iterdir():
+            if path.is_dir():
+                template = '*%s*' if str(path.stem) == head else ' %s '
+                print(template  % path.stem)
 
 
 def checkout(args):
@@ -68,6 +79,7 @@ def main():
     parser_checkout.set_defaults(func=checkout)
 
     parser_env = subparsers.add_parser('env')
+    parser_env.add_argument('-d', type=str, help='delete envrionment', action='store')
     parser_env.set_defaults(func=env)
 
     args = parser.parse_args()
