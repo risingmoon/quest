@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+import argparse
 import os
 
 QUEST_ROOT = '.quest'
 
 
-def init():
+def init(args):
     """
     Initialize .quest directory
     :return:
@@ -16,7 +18,17 @@ def init():
 
 
 def main():
-    init()
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand')
+
+    parser_init = subparsers.add_parser('init')
+    parser_init.set_defaults(func=init)
+
+    args = parser.parse_args()
+    if args.subcommand is None:
+        parser.print_help()
+    else:
+        args.func(args)
 
 
 if __name__ == '__main__':
